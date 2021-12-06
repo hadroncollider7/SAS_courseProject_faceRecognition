@@ -7,7 +7,7 @@ clear variables;
 clf;
 
 % READ AND PLOT THE IMAGE
-[img,map] = imread('att_faces\s8\5.pgm');
+[img,map] = imread('s8\5.pgm');
     % read the image data (112x92 px) and store the data in an array (of size 112x92)
     %   img the array containing the image data
     %   map stores the image's associated color map.
@@ -34,7 +34,29 @@ c_hat = 255*(log10(1+t1)/log10(1+t2));
 % Part 2: Feature extraction
 % Description: The features of the face is extracted using a
 %   zigzag, 1D vector. Faciac ID is done by comparing these
-%   one dimensional vectors.
+%   one dimensional vectors, rather than comparing the original
+%   face matrix. The features vector is created from the 2ddct.
 %********************************************************************
-[featureVector1] = findfeatures('att_faces\s8\1.pgm',100);
-[featureVector2] = findfeatures('att_faces\s10\1.pgm',100);
+[featureVector1] = findfeatures('s8\1.pgm',100);
+[featureVector2] = findfeatures('s10\1.pgm',100);
+
+%% ******************************************************************
+% Part 3: Training the face identification system
+% Description: The first 5 pgm of each subject is used to train the
+%   system by taking each image and converting it to a feature
+%   vector of specified length. With 40 subjects, there will be
+%   a total of 200 collections.
+%********************************************************************
+clear variables;
+clf;
+subject_range = [1 40]; % The range of subjects to train the system
+dct_coef = 70;          % The cutoff length of the feature vector
+
+% IMPORTANT: change to the correct filepath for att_faces 
+%   in line 52 of the face_recog_knn_train.m file
+
+% TRAIN THE kNN CLASSIFIER
+[trdata_raw,trclass] = face_recog_knn_train(subject_range,dct_coef);
+
+
+

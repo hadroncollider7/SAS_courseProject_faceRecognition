@@ -47,7 +47,9 @@ for i=1:nsubjects
     for j=1:5
 
 % Assign the filename for processing
-        name = ['I:\biometric\face_dct_att\att_faces\s'...
+%         name = ['I:\biometric\face_dct_att\att_faces\s'...
+%             num2str(f_range(i)) '\' num2str(j) '.pgm'];
+        name = ['C:\Users\longc\Documents\GitHub\SAS_courseProject_faceRecognition\MATLAB\att_faces\s'...
             num2str(f_range(i)) '\' num2str(j) '.pgm'];
 
 % Run "findfeatures" which returns a DCT vector (face_feat) with the

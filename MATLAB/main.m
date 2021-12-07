@@ -58,5 +58,8 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % TRAIN THE kNN CLASSIFIER
 [trdata_raw,trclass] = face_recog_knn_train(subject_range,dct_coef);
 
-
+%% ******************************************************************
+% Part 4: Performance evaluation of the face identification system
+% Description: 
+%********************************************************************
 

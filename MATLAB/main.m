@@ -62,10 +62,6 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % Part 4: Performance evaluation of the face identification system
 % Description: 
 %********************************************************************
-% k is the number of samples per subject, i.e., k = 5 means compare with 
-%   5 samples per subject ( the maximum number of samples possible
-%   in our case), and k = 2 means compare with 2 samples per subject.
-
 % (1) take the remaining files 6.pgm to 10.pgm of each subject and use findfeatures 
 
 % (2) compare each feature vector with every vector in trdata_raw to get the L2

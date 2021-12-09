@@ -65,3 +65,29 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % k is the number of samples per subject, i.e., k = 5 means compare with 
 %   5 samples per subject ( the maximum number of samples possible
 %   in our case), and k = 2 means compare with 2 samples per subject.
+
+% (1) take the remaining files 6.pgm to 10.pgm of each subject and use findfeatures 
+
+% (2) compare each feature vector with every vector in trdata_raw to get the L2
+%     distance
+%     L2 = norm(([B1]-[A1])^2+([B2]-[A2])^2+...([B70]-[A70])^2)
+
+% (3) find the k smallest L2 distances, where k = 1,3,5, or 7. create an array
+%     where the lowest L2 is the first element, 2nd lowest is 2nd element, etc.
+
+
+% (4) take a majority vote to identify the subject (if tie, take the lowest L2 value)
+%     do not use the mode function in MATLAB.
+
+% (5) Do for 5 Files different from training for each subject and all 40
+%     subjects to get 200 evaluations.
+
+% (6) Calculate Identification success rate = (# subjects identified
+%     correctly) / 200 expressed as a percent
+
+% (7) Use MATLAB to generate a 3D plot 
+%     x-axis = k
+%     y-axis = dctlength
+%     z-axis = identification success rate
+
+

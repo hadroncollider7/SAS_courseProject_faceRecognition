@@ -71,6 +71,17 @@ nsubjects = 40;
 dct_coef = 70;
 
 % (1) take the remaining files 6.pgm to 10.pgm of each subject and use findfeatures 
+% Assign the vector f_range to the range of subject specified by
+% subject_range
+f_range=subject_range(1):subject_range(2); 
+
+% Check if subject_range(1) = f_range(1) = 1
+if (f_range(1) ~= 1)
+  error('The first subject must have a label of 1');
+end
+
+% Assign the number of subjects to the length of f_range
+nsubjects = length(f_range);
 
 for i=1:nsubjects
 

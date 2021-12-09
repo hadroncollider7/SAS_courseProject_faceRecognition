@@ -33,12 +33,12 @@ c_hat = 255*(log10(1+t1)/log10(1+t2));
 %% ******************************************************************
 % Part 2: Feature extraction
 % Description: The features of the face is extracted using a
-%   zigzag, 1D vector. Faciac ID is done by comparing these
+%   zigzag, 1D vector. Facial ID is done by comparing these
 %   one dimensional vectors, rather than comparing the original
 %   face matrix. The features vector is created from the 2ddct.
 %********************************************************************
-[featureVector1] = findfeatures('s8\1.pgm',100);
-[featureVector2] = findfeatures('s10\1.pgm',100);
+[featureVector1] = findfeatures('att_faces\s8\1.pgm',100);
+[featureVector2] = findfeatures('att_faces\s8\2.pgm',100);
 
 %% ******************************************************************
 % Part 3: Training the face identification system
@@ -62,4 +62,6 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % Part 4: Performance evaluation of the face identification system
 % Description: 
 %********************************************************************
-
+% k is the number of samples per subject, i.e., k = 5 means compare with 
+%   5 samples per subject ( the maximum number of samples possible
+%   in our case), and k = 2 means compare with 2 samples per subject.

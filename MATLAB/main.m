@@ -62,11 +62,43 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % Part 4: Performance evaluation of the face identification system
 % Description: 
 %********************************************************************
+
+% k is the number of samples per subject, i.e., k = 5 means compare with 
+%   5 samples per subject ( the maximum number of samples possible
+%   in our case), and k = 2 means compare with 2 samples per subject.
+k = 5;
+nsubjects = 40;
+dct_coef = 70;
+
 % (1) take the remaining files 6.pgm to 10.pgm of each subject and use findfeatures 
+
+for i=1:nsubjects
+
+% Loop through the last five faces in the subject folders. 
+    for j=6:10
+
+% Assign the filename for processing
+%         name = ['I:\biometric\face_dct_att\att_faces\s'...
+%             num2str(f_range(i)) '\' num2str(j) '.pgm'];
+        name = ['C:\Users\longc\Documents\GitHub\SAS_courseProject_faceRecognition\MATLAB\att_faces\s'...
+            %C:\Users\rlkmi\Documents\5_2021_Junior_Fall\Signals-and-Systems\SAS_Final_Project\SAS_courseProject_faceRecognition\MATLAB\att_faces\s
+            num2str(f_range(i)) '\' num2str(j) '.pgm'];
+
+% Run "findfeatures" which returns a DCT vector (face_feat) with the
+% length defined in dct_coef.
+        face_feat(j,:)=findfeatures(name,dct_coef); 
+    end
+% Add the five face_feat vectors to the end of subject_test.
+subject_test=[subject_test face_feat(6:10,:)'];
+
+% End of for i=1:nsubjects loop
+end
 
 % (2) compare each feature vector with every vector in trdata_raw to get the L2
 %     distance
 %     L2 = norm(([B1]-[A1])^2+([B2]-[A2])^2+...([B70]-[A70])^2)
+
+
 
 % (3) find the k smallest L2 distances, where k = 1,3,5, or 7. create an array
 %     where the lowest L2 is the first element, 2nd lowest is 2nd element, etc.

@@ -48,6 +48,9 @@ c_hat = 255*(log10(1+t1)/log10(1+t2));
 %   a total of 200 collections.
 %********************************************************************
 clear variables;
+[subject1_6] = findfeatures('att_faces\s1\6.pgm',100);
+[subject1_7] = findfeatures('att_faces\s1\7.pgm',100);
+
 subject_range = [1 40]; % The range of subjects to train the system
 dct_coef = 70;          % The cutoff length of the feature vector
 
@@ -61,12 +64,12 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % Part 4: Write a knn classifier function and do a performance
 %   evaluation.
 %********************************************************************
-unknown_face = findfeatures('att_faces\s8\1.pgm',dct_coef);
-known_face = trdata_raw(36,[1:dct_coef])';
-subtract_vect = unknown_face - known_face;
-L2_distance = norm(subtract_vect);
+% unknown_face = findfeatures('att_faces\s8\1.pgm',dct_coef);
+% known_face = trdata_raw(36,[1:dct_coef])';
+% subtract_vect = unknown_face - known_face;
+% L2_distance = norm(subtract_vect);
 
-
+knn_classifier(1,dct_coef,trdata_raw,trclass);
 
 
 

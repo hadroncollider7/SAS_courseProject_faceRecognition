@@ -29,5 +29,8 @@ for i = 1:nsubjects
     end
     unknownFaces = [unknownFaces face_feat(1:5,:)'];
 end
-id_vector = unknownFaces';
+subtraction_matrix = [];
+
+
+id_vector = unknownFaces'; % For debug only.
 end

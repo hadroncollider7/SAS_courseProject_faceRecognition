@@ -48,9 +48,6 @@ c_hat = 255*(log10(1+t1)/log10(1+t2));
 %   a total of 200 collections.
 %********************************************************************
 clear variables;
-[subject1_6] = findfeatures('att_faces\s1\6.pgm',100);
-[subject1_7] = findfeatures('att_faces\s1\7.pgm',100);
-
 subject_range = [1 40]; % The range of subjects to train the system
 dct_coef = 70;          % The cutoff length of the feature vector
 
@@ -65,7 +62,14 @@ dct_coef = 70;          % The cutoff length of the feature vector
 %   evaluation.
 %********************************************************************
 id = knn_classifier(1,dct_coef,trdata_raw,trclass);
-points = success_rate(id)
+points = success_rate(id);
+
+%********************************************************************
+% PLOT 3D GRAPH
+%********************************************************************
+featureVector_length = 25:15:100;
+K = [1 3 5 7 9 11];
+
 
 
 

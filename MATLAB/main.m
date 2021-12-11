@@ -65,7 +65,7 @@ dct_coef = 70;          % The cutoff length of the feature vector
 %   evaluation.
 %********************************************************************
 id = knn_classifier(1,dct_coef,trdata_raw,trclass);
-
+points = success_rate(id)
 
 
 

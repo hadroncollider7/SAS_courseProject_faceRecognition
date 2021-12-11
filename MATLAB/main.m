@@ -37,8 +37,8 @@ c_hat = 255*(log10(1+t1)/log10(1+t2));
 %   one dimensional vectors, rather than comparing the original
 %   face matrix. The features vector is created from the 2ddct.
 %********************************************************************
-[featureVector1] = findfeatures('att_faces\s8\1.pgm',100);
-[featureVector2] = findfeatures('att_faces\s8\2.pgm',100);
+[featureVector1] = findfeatures('att_faces\s1\6.pgm',70);
+[featureVector2] = findfeatures('att_faces\s8\2.pgm',70);
 
 %% ******************************************************************
 % Part 3: Training the face identification system

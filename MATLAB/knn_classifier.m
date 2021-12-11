@@ -29,8 +29,26 @@ for i = 1:nsubjects
     end
     unknownFaces = [unknownFaces face_feat(1:5,:)'];
 end
-subtraction_matrix = [];
-
+unknownFaces = unknownFaces';
+%**************************************************************************
+% KNN CLASSIFIER
+%**************************************************************************
+knn_raw = zeros(1,nsubjects*5);         % to stores the unordered knn's
+knn = zeros(1,nsubjects*5);             % to store the ordered knn's from least to greatest
+knn_raw_class = zeros(1,nsubjects*5);   % to store the class label for each raw knn
+knn_class = zeros(1,nsubjects*5);       % to store the class label for each ordered knn
+for i = 1:nsubjects*5;
+    L2_distance_vector = zeros(1,nsubjects*5);
+    for j = 1:(nsubjects*5);
+        subtract_vector = unknownFaces(i,:) - trdata_raw(j,:);
+        % Take the norm and store in L2_distance
+        L2_distance_vector(j) = norm(subtract_vector);
+    end
+    % Store the smallest L2 distance into an knn_vector_raw index
+    knn_raw(i) = min(L2_distance_vector);
+    % record class entry
+    knn_raw_class(i) = trclass(find(L2_distance_vector==min(L2_distance_vector)));
+end
 
 id_vector = unknownFaces'; % For debug only.
 end

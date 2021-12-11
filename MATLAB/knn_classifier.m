@@ -7,10 +7,9 @@
 %   trclass = class labels for each training data vector
 % Outputs:
 %   id_vector = system identification of unknown faces
-%   per_eval = percentage of successful system identifications
 %**************************************************************************
 
-function [id_vector,perf_eval] = knn_classifier(k,dct_coeff,trdata_raw,trclass)
+function id_vector = knn_classifier(k,dct_coeff,trdata_raw,trclass)
 % Create a matrix containing the feature vectors of the unknown faces.
 nsubjects = 40;
 subjectRange = 1:nsubjects;
@@ -33,10 +32,7 @@ unknownFaces = unknownFaces';
 %**************************************************************************
 % KNN CLASSIFIER
 %**************************************************************************
-knn_raw = zeros(1,nsubjects*5);         % to stores the unordered knn's
 knn = zeros(1,nsubjects*5);             % to store the ordered knn's from least to greatest
-knn_raw_class = zeros(1,nsubjects*5);   % to store the class label for each raw knn
-knn_class = zeros(1,nsubjects*5);       % to store the class label for each ordered knn
 for i = 1:nsubjects*5;
     L2_distance_vector = zeros(1,nsubjects*5);
     for j = 1:(nsubjects*5);
@@ -44,11 +40,24 @@ for i = 1:nsubjects*5;
         % Take the norm and store in L2_distance
         L2_distance_vector(j) = norm(subtract_vector);
     end
-    % Store the smallest L2 distance into an knn_vector_raw index
-    knn_raw(i) = min(L2_distance_vector);
-    % record class entry
-    knn_raw_class(i) = trclass(find(L2_distance_vector==min(L2_distance_vector)));
+    % Sort L2 vector
+    [L2_ordered,L2_index] = sort(L2_distance_vector);
+
+    % Find smallest k-distance and record labels of each candidate
+    L2_class = L2_index(1:k);                   % stores the class label for each subject
+    for m = 1:k
+        L2_class(m) = trclass(L2_index(m));     % record the class of each k neighbor
+    end
+
+    %**************************************************************************
+    % TAKE POPULARITY VOTE
+    %**************************************************************************
+    for m = 1:k
+        L2_class_popularity(m) = length(find(L2_class==L2_class(m)));
+            % The amount of time each subject occurs in the KNN
+    end
+    id_vector(i) = L2_class(find(L2_class_popularity==max(L2_class_popularity),1));
 end
 
-id_vector = unknownFaces'; % For debug only.
+id_vector = id_vector'; 
 end

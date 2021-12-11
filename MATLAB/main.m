@@ -64,7 +64,7 @@ dct_coef = 70;          % The cutoff length of the feature vector
 % Part 4: Write a knn classifier function and do a performance
 %   evaluation.
 %********************************************************************
-knn_classifier(1,dct_coef,trdata_raw,trclass);
+id = knn_classifier(1,dct_coef,trdata_raw,trclass);
 
 
 

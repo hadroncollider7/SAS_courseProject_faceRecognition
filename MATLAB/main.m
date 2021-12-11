@@ -70,8 +70,8 @@ points = success_rate(id);
 %********************************************************************
 
 clear variables;
-dct_coef = 25:15:100;
-k = [1 3 5 7];
+dct_coef = 25:5:100;
+k = 1:2:200;
 ID_successRate = zeros(length(dct_coef),length(k));
 for i = 1:length(dct_coef)
     for j = 1:length(k)

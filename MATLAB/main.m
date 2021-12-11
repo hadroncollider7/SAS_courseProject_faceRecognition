@@ -64,11 +64,31 @@ dct_coef = 70;          % The cutoff length of the feature vector
 id = knn_classifier(1,dct_coef,trdata_raw,trclass);
 points = success_rate(id);
 
+%%
 %********************************************************************
 % PLOT 3D GRAPH
 %********************************************************************
-featureVector_length = 25:15:100;
-K = [1 3 5 7 9 11];
+
+clear variables;
+dct_coef = 25:15:100;
+k = [1 3 5 7];
+ID_successRate = zeros(length(dct_coef),length(k));
+for i = 1:length(dct_coef)
+    for j = 1:length(k)
+        subject_range = [1 40]; % The range of subjects to train the system
+
+        % TRAIN THE kNN CLASSIFIER
+        [trdata_raw,trclass] = face_recog_knn_train(subject_range,dct_coef(i));
+
+        id = knn_classifier(k(j),dct_coef(i),trdata_raw,trclass);
+        ID_successRate(i,j) = success_rate(id);
+    end
+end
+
+surf(k,dct_coef,ID_successRate);
+xlabel('K');
+ylabel('DCT Length');
+zlabel('Success Rate')
 
 
 
@@ -94,73 +114,4 @@ K = [1 3 5 7 9 11];
 
 
 
-
-
-
-
-% k = 5;
-% subject_range = [1 40]; % The range of subjects to train the system
-% dct_coef = 70;
-% 
-% % (1) take the remaining files 6.pgm to 10.pgm of each subject and use 
-%           findfeatures 
-% % Assign the vector f_range to the range of subject specified by
-% % subject_range
-% f_range=subject_range(1):subject_range(2); 
-% 
-% % Check if subject_range(1) = f_range(1) = 1
-% if (f_range(1) ~= 1)
-%   error('The first subject must have a label of 1');
-% end
-% 
-% % Assign the number of subjects to the length of f_range
-% nsubjects = length(f_range);
-% 
-% for i=1:nsubjects
-% 
-% % Loop through the last five faces in the subject folders. 
-%     for j=6:10
-% 
-% % Assign the filename for processing
-% %         name = ['I:\biometric\face_dct_att\att_faces\s'...
-% %             num2str(f_range(i)) '\' num2str(j) '.pgm'];
-%         name = ['C:\Users\longc\Documents\GitHub\SAS_courseProject_faceRecognition\MATLAB\att_faces\s'...
-%             num2str(f_range(i)) '\' num2str(j) '.pgm'];
-% 
-% % Run "findfeatures" which returns a DCT vector (face_feat) with the
-% % length defined in dct_coef.
-%         face_feat(j,:)=findfeatures(name,dct_coef); 
-%     end
-% % Add the five face_feat vectors to the end of subject_test.
-% subject_test=[subject_test face_feat(6:10,:)'];
-% 
-% % End of for i=1:nsubjects loop
-% end
-% 
-% % (2) compare each feature vector with every vector in trdata_raw to get 
-%           the L2 distance
-%
-% %     L2 = norm(([B1]-[A1])^2+([B2]-[A2])^2+...([B70]-[A70])^2)
-% 
-% 
-% 
-% % (3) find the k smallest L2 distances, where k = 1,3,5, or 7. create an
-%           array where the lowest L2 is the first element, 2nd lowest is 
-%           2nd element, etc.
-% 
-% 
-% % (4) take a majority vote to identify the subject (if tie, take the 
-%           lowest L2 value. Do not use the mode function in MATLAB.
-% 
-% % (5) Do for 5 Files different from training for each subject and all 40
-% %     subjects to get 200 evaluations.
-% 
-% % (6) Calculate Identification success rate = (# subjects identified
-% %     correctly) / 200 expressed as a percent
-% 
-% % (7) Use MATLAB to generate a 3D plot 
-% %     x-axis = k
-% %     y-axis = dctlength
-% %     z-axis = identification success rate
-% 
 
